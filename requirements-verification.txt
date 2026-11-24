@@ -1,0 +1,2 @@
+jsonschema==4.23.0
+pyarrow==18.1.0

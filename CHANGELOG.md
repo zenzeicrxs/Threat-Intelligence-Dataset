@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2026 development
-- Recorded owner publication authorization and separate code/data licensing.
-- Added aggregate CSV/JSONL, structural audit, provenance, documentation, examples, reconciliation tests and checksum tooling.
-- Introduced annual coverage metadata and governance.
-- Official release and artifact-level publication review remain pending.
+- Pinned source snapshot and independent normalization audit.
+- Local IP/SHA256 normalization and provenance pipeline; empirical schema and CSV/JSONL/Parquet round-trip verification configured.
+- Added aggregate statistics, cross-collection analysis, research documentation, licensing and annual release controls.
+- Official release and artifact-level review pending.
