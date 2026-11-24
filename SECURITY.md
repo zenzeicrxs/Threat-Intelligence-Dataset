@@ -1,2 +1,0 @@
-# Responsible handling
-This project is for defensive research. Do not execute, retrieve or redistribute malware samples through this repository. Do not include credentials, session tokens or restricted source records in issues or pull requests. Report suspected sensitive-data exposure privately to the repository maintainer through GitHub private vulnerability reporting if enabled, or another verified private channel. Do not assume public source visibility establishes redistribution rights.

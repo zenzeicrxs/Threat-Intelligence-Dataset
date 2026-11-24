@@ -1,7 +1,0 @@
-cff-version: 1.2.0
-message: Cite this development edition with its exact commit; not a final release.
-title: VulneraX Annual Threat Intelligence Dataset 2026
-authors:
-  - name: VulneraX
-type: dataset
-repository-code: https://github.com/zenzeicrxs/Threat-Intelligence-Dataset

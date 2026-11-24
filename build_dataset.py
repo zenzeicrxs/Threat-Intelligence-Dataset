@@ -1,5 +1,5 @@
 """Build local research indicator metadata from explicitly authorized text lists.
-No network, enrichment, malware handling, or public export. Use an ignored .local directory.
+No IOC endpoint access, enrichment, malware handling or public export. Use ignored .local.
 """
 import argparse
 import csv
@@ -63,32 +63,51 @@ def build(source):
         audit.append(summary)
     return [records[k] for k in sorted(records)], audit
 
-def write_local(records, audit, out):
-    out = Path(out).resolve()
-    local = Path(__file__).resolve().parents[1] / ".local"
-    if out == local or not out.is_relative_to(local):
-        raise ValueError("Output must be a subdirectory of ignored .local")
+# Pinned, owner-authorized text metadata only; no malware or IOC destinations fetched.
+from tempfile import TemporaryDirectory
+from urllib.parse import quote
+from urllib.request import urlopen
+
+PIN = "14e732e6acd8002a5ada7c729e34aeeda04cd70d"
+BLOBS = ("b4f116c9d6adab72bc9b8e15a59fbdb47a7e3606",
+         "7758ec23941e766e1b70391d881b4157de893966",
+         "e0008fe8d26d9cce88ad050966840327e8dc70f0",
+         "ba5344848742f0e9566924d43868cc7b660c4211")
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate the local 2026 research dataset.")
+    parser.add_argument("--source", type=Path, help="Authorized local source directory; otherwise retrieve the four pinned text files")
+    args = parser.parse_args()
+    if args.source:
+        records, audit = build(args.source)
+    else:
+        with TemporaryDirectory() as tmp:
+            source = Path(tmp)
+            for (_, _, relative), expected in zip(SOURCES, BLOBS):
+                url = f"https://raw.githubusercontent.com/zenzeicrxs/Blacklist-Artifact/{PIN}/{quote(relative, safe='/')}"
+                with urlopen(url, timeout=30) as stream:
+                    raw = stream.read(2_000_001)
+                if len(raw) > 2_000_000 or hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest() != expected:
+                    raise ValueError("Source integrity check failed")
+                path = source / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(raw)
+            records, audit = build(source)
+        if len(records) != 22190:
+            raise ValueError("Normalized count differs from verified snapshot")
+    # Keep only the requested CSV and the compact provenance manifest.
+    out = Path(__file__).resolve().parent / ".local/2026"
     out.mkdir(parents=True, exist_ok=True)
-    with (out/"indicators.jsonl").open("w", encoding="utf-8", newline="\n") as f:
-        for r in records:
-            f.write(json.dumps(r, separators=(",",":"))+"\n")
-    with (out/"indicators.csv").open("w", encoding="utf-8", newline="") as f:
+    path = out / "indicators.csv"
+    with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         writer.writeheader()
-        for r in records:
-            writer.writerow({k:json.dumps(v,separators=(",",":")) if isinstance(v,list) else v for k,v in r.items()})
-    manifest = {"status":"local_review_only","rows":len(records),"sources":audit,
-                "classification":"pending_artifact_review","files":{}}
-    for name in ("indicators.csv","indicators.jsonl"):
-        manifest["files"][name] = hashlib.sha256((out/name).read_bytes()).hexdigest()
+        for row in records:
+            writer.writerow({k:json.dumps(v,separators=(",",":")) if isinstance(v,list) else v for k,v in row.items()})
+    manifest = {"status":"local_review_only","rows":len(records),"source_commit":PIN if not args.source else None,
+                "sources":audit,"csv_sha256":hashlib.sha256(path.read_bytes()).hexdigest()}
     (out/"manifest.json").write_text(json.dumps(manifest,indent=2)+"\n", encoding="utf-8")
+    print(f"Generated {len(records):,} records in {path}; not an official release.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", required=True, type=Path)
-    parser.add_argument("--out", default=".local/2026", type=Path)
-    parser.add_argument("--authorized-input", action="store_true", required=True)
-    args = parser.parse_args()
-    records, audit = build(args.source)
-    write_local(records, audit, args.out)
-    print(f"Local review package: {len(records)} normalized indicators; not published")
+    main()

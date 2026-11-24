@@ -16,3 +16,17 @@ Q2,url_table_rows,14,structural_audit
 Q2,download_rows,55,structural_audit
 Q2,download_hash_present,20,structural_audit
 Q2,download_filename_present,0,structural_audit
+Q2,distinct_ip_strings,8356,structural_audit
+Q1,normalized_ipv4,14548,empirical_ci
+Q2,normalized_ipv4,8330,empirical_ci
+Q1,excluded_ip_rows,2,empirical_ci
+Q2,excluded_ip_rows,26,empirical_ci
+Q1,normalized_sha256,26,empirical_ci
+Q2,normalized_sha256,658,empirical_ci
+Q1_Q2,shared_ipv4,1370,empirical_ci
+Q1_Q2,shared_sha256,2,empirical_ci
+Q1_Q2,unique_ipv4,21508,empirical_ci
+Q1_Q2,unique_sha256,682,empirical_ci
+Q1_Q2,unique_indicators,22190,empirical_ci
+Q1_Q2,source_input_rows,23590,empirical_ci
+Q1_Q2,excluded_rows,28,empirical_ci
