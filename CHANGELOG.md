@@ -1,5 +1,7 @@
 # Changelog
 
 ## 2026 development
-- Introduced annual coverage metadata, preliminary audit, governance documentation, validation and report scaffold.
-- No dataset release or redistribution approval yet.
+- Recorded owner publication authorization and separate code/data licensing.
+- Added aggregate CSV/JSONL, structural audit, provenance, documentation, examples, reconciliation tests and checksum tooling.
+- Introduced annual coverage metadata and governance.
+- Official release and artifact-level publication review remain pending.
