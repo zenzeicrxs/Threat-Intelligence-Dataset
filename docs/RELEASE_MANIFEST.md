@@ -1,0 +1,2 @@
+# Development artifact manifest
+The aggregate CSV and JSONL contain the same seventeen metrics. Schema and dictionary describe their grain. The annual report is a Markdown draft. Quality report and provenance accompany both exports. The example uses only aggregate data and Python standard library. Release version is not assigned until approval. No official release assets or tags exist by virtue of this manifest.
