@@ -1,0 +1,4 @@
+# Preliminary source audit
+Q1: tier-specific IP CSV/TXT, aggregate IP list, SHA256 and URL lists, download event CSV, per-IP and per-hash aggregates, statistics and README. Sampled IP columns: ip, chains, events, country, asn, first_seen, last_seen. The asn column contains organization names rather than numeric ASNs. Download records have timestamp, src_ip, shasum, url, destfile, session. Session and path fields require publication review.
+Q2: IOC, Infrastructure, Malware, Timeline directories, README and statistics.json. Q2 is an investigation collection, not necessarily a comparable population to Q1. Detailed row audit and reconciliation pending.
+Root README contains TLP:AMBER despite public visibility, and Q2 release text is stale relative to directory presence. Do not infer distribution consent. Source-reported Q1 counts are not independently validated. Raw source remains unchanged.

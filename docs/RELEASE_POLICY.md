@@ -1,0 +1,2 @@
+# Annual release policy
+Publish only after December 31 of the edition year. Missing quarters are explicitly unavailable and are never imputed as zero. Require documented authorization covering all included artifacts, privacy review, validated counts, schema checks, reproducibility and human approval. Separate code and data licensing. No automatic publication or live feed. Use year-based editions with semantic revision numbers, preserve prior versions and record corrections.

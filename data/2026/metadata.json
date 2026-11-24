@@ -1,0 +1,31 @@
+{
+  "year": 2026,
+  "status": "development",
+  "redistribution_approved": false,
+  "quarters": [
+    {
+      "label": "Q1",
+      "availability": "available_at_source",
+      "start": "2026-02-20",
+      "end": "2026-03-21"
+    },
+    {
+      "label": "Q2",
+      "availability": "available_at_source",
+      "start": "2026-03-24",
+      "end": "2026-06-20"
+    },
+    {
+      "label": "Q3",
+      "availability": "unavailable",
+      "start": null,
+      "end": null
+    },
+    {
+      "label": "Q4",
+      "availability": "unavailable",
+      "start": null,
+      "end": null
+    }
+  ]
+}

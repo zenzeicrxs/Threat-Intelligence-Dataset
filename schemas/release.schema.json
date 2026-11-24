@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "year",
+    "status",
+    "redistribution_approved",
+    "quarters"
+  ],
+  "properties": {
+    "year": {
+      "type": "integer",
+      "minimum": 2000
+    },
+    "status": {
+      "enum": [
+        "development",
+        "released"
+      ]
+    },
+    "redistribution_approved": {
+      "type": "boolean"
+    },
+    "quarters": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "availability",
+          "start",
+          "end"
+        ],
+        "properties": {
+          "label": {
+            "enum": [
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q4"
+            ]
+          },
+          "availability": {
+            "enum": [
+              "available_at_source",
+              "unavailable"
+            ]
+          },
+          "start": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "end": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}
